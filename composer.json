@@ -1,0 +1,30 @@
+{
+    "name": "alimranahmed/ecb-exchange",
+    "description": "PHP package for ECB currency exchange rates with fluent API and SOLID architecture",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "ECB Exchange"
+        }
+    ],
+    "require": {
+        "php": ">=7.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "EcbExchange\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "EcbExchange\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    }
+}
