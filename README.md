@@ -1,3 +1,6 @@
+[![Test Coverage](https://raw.githubusercontent.com/alimranahmed/ecb-exchange/main/tests/coverage/badge-coverage.svg)](https://packagist.org/packages/alimranahmed/ecb-exchange)
+[![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
+
 # ECB Exchange Rate PHP Package
 
 A modern, fluent PHP package for accessing European Central Bank (ECB) exchange rate data [API](https://data.ecb.europa.eu/help/api/data)
