@@ -16,11 +16,14 @@ class EcbApiRepository
     private const ECB_UPDATE_HOUR = 16;
     private const ECB_UPDATE_TIMEZONE = 'Europe/Brussels';
 
-    public function __construct(
-        private int $timeout = 30
-    ) {}
+    private $timeout;
 
-    public function getRateToEur(string $currency, string $date, ?string $updatedAfter = null): float
+    public function __construct($timeout = 30)
+    {
+        $this->timeout = $timeout;
+    }
+
+    public function getRateToEur($currency, $date, $updatedAfter = null)
     {
         if ($currency === 'EUR') {
             return 1.0;
@@ -41,7 +44,7 @@ class EcbApiRepository
         return $rates[$currency];
     }
 
-    public function getSupportedCurrencies(): array
+    public function getSupportedCurrencies()
     {
         // Use a recent date to get supported currencies
         $recentDate = $this->getRecentWorkingDay();
@@ -60,7 +63,7 @@ class EcbApiRepository
         }
     }
 
-    public function getTimeSeries(string $startDate, string $endDate, array $currencies = []): array
+    public function getTimeSeries($startDate, $endDate, $currencies = [])
     {
         $url = $this->buildTimeSeriesUrl($startDate, $endDate, $currencies);
         $response = $this->httpGet($url);
@@ -68,7 +71,7 @@ class EcbApiRepository
         return $this->parseTimeSeriesData($response, $currencies);
     }
 
-    public function isDataAvailable(string $date): bool
+    public function isDataAvailable($date)
     {
         try {
             $url = $this->buildApiUrl($date, ['USD']); // Test with USD
@@ -80,7 +83,7 @@ class EcbApiRepository
         }
     }
 
-    public function getLastUpdateTime(string $date): ?string
+    public function getLastUpdateTime($date)
     {
         // ECB rates are typically updated around 16:00 CET on working days
         $dateTime = new \DateTime($date, new \DateTimeZone(self::ECB_UPDATE_TIMEZONE));
@@ -96,7 +99,7 @@ class EcbApiRepository
         return $dateTime->format('c'); // ISO 8601 format
     }
 
-    private function httpGet(string $url): string
+    private function httpGet($url)
     {
         $context = stream_context_create([
             'http' => [
@@ -120,7 +123,7 @@ class EcbApiRepository
         return $response;
     }
 
-    private function parseExchangeRates(string $jsonResponse): array
+    private function parseExchangeRates($jsonResponse)
     {
         $data = json_decode($jsonResponse, true);
 
@@ -163,7 +166,7 @@ class EcbApiRepository
         return $rates;
     }
 
-    private function parseTimeSeriesData(string $jsonResponse, array $currencies = []): array
+    private function parseTimeSeriesData($jsonResponse, $currencies = [])
     {
         $data = json_decode($jsonResponse, true);
 
@@ -226,7 +229,7 @@ class EcbApiRepository
         return $timeSeries;
     }
 
-    private function findDimensionIndex(array $dimensions, string $dimensionId): int
+    private function findDimensionIndex($dimensions, $dimensionId)
     {
         foreach ($dimensions as $index => $dimension) {
             if (isset($dimension['id']) && $dimension['id'] === $dimensionId) {
@@ -237,7 +240,7 @@ class EcbApiRepository
         throw new Exception("Dimension '{$dimensionId}' not found in API response");
     }
 
-    private function buildApiUrl(string $date, array $currencies): string
+    private function buildApiUrl($date, $currencies)
     {
         $currencyList = implode('+', $currencies);
         $url = self::ECB_API_URL . '/D.' . $currencyList . '.EUR.SP00.A';
@@ -246,7 +249,7 @@ class EcbApiRepository
         return $url;
     }
 
-    private function buildTimeSeriesUrl(string $startDate, string $endDate, array $currencies = []): string
+    private function buildTimeSeriesUrl($startDate, $endDate, $currencies = [])
     {
         $currencyList = empty($currencies) ? implode('+', self::MAJOR_CURRENCIES) : implode('+', $currencies);
         $url = self::ECB_API_URL . '/D.' . $currencyList . '.EUR.SP00.A';
@@ -255,7 +258,7 @@ class EcbApiRepository
         return $url;
     }
 
-    private function getEffectiveDate(string $date, ?string $updatedAfter = null): string
+    private function getEffectiveDate($date, $updatedAfter = null)
     {
         $requestDate = new \DateTime($date, new \DateTimeZone(self::ECB_UPDATE_TIMEZONE));
         
@@ -293,7 +296,7 @@ class EcbApiRepository
         return $originalDate;
     }
 
-    private function getRecentWorkingDay(): string
+    private function getRecentWorkingDay()
     {
         $date = new \DateTime('now', new \DateTimeZone(self::ECB_UPDATE_TIMEZONE));
         
@@ -305,13 +308,13 @@ class EcbApiRepository
         return $date->format('Y-m-d');
     }
 
-    private function isWeekend(\DateTime $date): bool
+    private function isWeekend(\DateTime $date)
     {
         $dayOfWeek = (int) $date->format('N');
         return $dayOfWeek >= 6; // Saturday = 6, Sunday = 7
     }
 
-    private function getLastWorkingDay(\DateTime $date): \DateTime
+    private function getLastWorkingDay(\DateTime $date)
     {
         do {
             $date->modify('-1 day');
@@ -320,7 +323,7 @@ class EcbApiRepository
         return $date;
     }
 
-    private function getPreviousWorkingDay(\DateTime $date): \DateTime
+    private function getPreviousWorkingDay(\DateTime $date)
     {
         do {
             $date->modify('-1 day');

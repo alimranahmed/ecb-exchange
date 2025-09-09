@@ -9,14 +9,14 @@ use EcbExchange\EcbApiRepository;
 
 class Ecb
 {
-    private static ?ExchangeRateService $service = null;
+    private static $service = null;
 
     /**
      * Get a new exchange rate builder instance
      * 
      * @return EcbExchangeBuilder
      */
-    public static function exchange(): EcbExchangeBuilder
+    public static function exchange()
     {
         if (self::$service === null) {
             self::$service = self::createService();
@@ -30,7 +30,7 @@ class Ecb
      * 
      * @return ExchangeRateService
      */
-    private static function createService(): ExchangeRateService
+    private static function createService()
     {
         $repository = new EcbApiRepository();
         return new ExchangeRateService($repository);
@@ -41,7 +41,7 @@ class Ecb
      * 
      * @return array Array of supported currency codes
      */
-    public static function getSupportedCurrencies(): array
+    public static function getSupportedCurrencies()
     {
         if (self::$service === null) {
             self::$service = self::createService();
@@ -58,7 +58,7 @@ class Ecb
      * @param array $currencies Optional array of currencies to filter
      * @return array Time series data
      */
-    public static function getTimeSeries(string $startDate, string $endDate, array $currencies = []): array
+    public static function getTimeSeries($startDate, $endDate, $currencies = [])
     {
         if (self::$service === null) {
             self::$service = self::createService();

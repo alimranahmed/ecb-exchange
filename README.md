@@ -149,13 +149,6 @@ MIT License. See LICENSE file for details.
 
 ## Changelog
 
-### 2.0.0
-- Complete rewrite with SOLID architecture
-- Fluent API implementation
-- ECB schedule awareness
-- Type safety improvements
-- Better error handling
-
 ### 1.0.0
 - Initial release with basic functionality
 

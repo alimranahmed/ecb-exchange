@@ -7,18 +7,18 @@ namespace EcbExchange;
  */
 class EcbExchangeRate
 {
-    private string $fromCurrency;
-    private string $toCurrency;
-    private float $rate;
-    private string $date;
-    private ?string $updatedAfter;
+    private $fromCurrency;
+    private $toCurrency;
+    private $rate;
+    private $date;
+    private $updatedAfter;
 
     public function __construct(
-        string $fromCurrency,
-        string $toCurrency,
-        float $rate,
-        string $date,
-        ?string $updatedAfter = null
+        $fromCurrency,
+        $toCurrency,
+        $rate,
+        $date,
+        $updatedAfter = null
     ) {
         $this->fromCurrency = $fromCurrency;
         $this->toCurrency = $toCurrency;
@@ -27,37 +27,37 @@ class EcbExchangeRate
         $this->updatedAfter = $updatedAfter;
     }
 
-    public function getFromCurrency(): string
+    public function getFromCurrency()
     {
         return $this->fromCurrency;
     }
 
-    public function getToCurrency(): string
+    public function getToCurrency()
     {
         return $this->toCurrency;
     }
 
-    public function getRate(): float
+    public function getRate()
     {
         return $this->rate;
     }
 
-    public function getDate(): string
+    public function getDate()
     {
         return $this->date;
     }
 
-    public function getUpdatedAfter(): ?string
+    public function getUpdatedAfter()
     {
         return $this->updatedAfter;
     }
 
-    public function convert(float $amount): float
+    public function convert($amount)
     {
         return $amount * $this->rate;
     }
 
-    public function toArray(): array
+    public function toArray()
     {
         return [
             'from_currency' => $this->fromCurrency,
@@ -68,7 +68,7 @@ class EcbExchangeRate
         ];
     }
 
-    public function __toString(): string
+    public function __toString()
     {
         return "1 {$this->fromCurrency} = {$this->rate} {$this->toCurrency} (on {$this->date})";
     }

@@ -11,47 +11,50 @@ use EcbExchange\ExchangeRateService;
  */
 class EcbExchangeBuilder
 {
-    private ?string $fromCurrency = null;
-    private ?string $toCurrency = null;
-    private ?string $fromDate = null;
-    private ?string $updatedAfter = null;
-    private array $toCurrencies = [];
+    private $fromCurrency = null;
+    private $toCurrency = null;
+    private $fromDate = null;
+    private $updatedAfter = null;
+    private $toCurrencies = [];
 
-    public function __construct(
-        private ExchangeRateService $exchangeRateService
-    ) {}
+    private $exchangeRateService;
 
-    public function fromCurrency(string $currency): self
+    public function __construct(ExchangeRateService $exchangeRateService)
+    {
+        $this->exchangeRateService = $exchangeRateService;
+    }
+
+    public function fromCurrency($currency)
     {
         $this->fromCurrency = $currency;
         return $this;
     }
 
-    public function toCurrency(string $currency): self
+    public function toCurrency($currency)
     {
         $this->toCurrency = $currency;
         return $this;
     }
 
-    public function toCurrencies(array $currencies): self
+    public function toCurrencies($currencies)
     {
         $this->toCurrencies = $currencies;
         return $this;
     }
 
-    public function date(string $date): self
+    public function date($date)
     {
         $this->fromDate = $date;
         return $this;
     }
 
-    public function updatedAfter(string $timestamp): self
+    public function updatedAfter($timestamp)
     {
         $this->updatedAfter = $timestamp;
         return $this;
     }
 
-    public function get(): EcbExchangeRate|EcbExchangeRateCollection
+    public function get()
     {
         if (!empty($this->toCurrencies)) {
             return $this->getMultipleRates();
@@ -60,7 +63,7 @@ class EcbExchangeBuilder
         return $this->getSingleRate();
     }
 
-    private function getSingleRate(): EcbExchangeRate
+    private function getSingleRate()
     {
         $fromCurrency = $this->fromCurrency ?? 'EUR';
         $toCurrency = $this->toCurrency ?? 'EUR';
@@ -82,7 +85,7 @@ class EcbExchangeBuilder
         );
     }
 
-    private function getMultipleRates(): EcbExchangeRateCollection
+    private function getMultipleRates()
     {
         $fromCurrency = $this->fromCurrency ?? 'EUR';
         $date = $this->fromDate ?? date('Y-m-d');

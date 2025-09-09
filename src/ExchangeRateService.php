@@ -9,16 +9,19 @@ use EcbExchange\EcbApiRepository;
  */
 class ExchangeRateService
 {
-    public function __construct(
-        private EcbApiRepository $repository
-    ) {}
+    private $repository;
+
+    public function __construct(EcbApiRepository $repository)
+    {
+        $this->repository = $repository;
+    }
 
     public function getExchangeRate(
-        string $fromCurrency,
-        string $toCurrency,
-        string $date,
-        ?string $updatedAfter = null
-    ): float {
+        $fromCurrency,
+        $toCurrency,
+        $date,
+        $updatedAfter = null
+    ) {
 
         if ($fromCurrency === $toCurrency) {
             return 1.0;
@@ -39,16 +42,16 @@ class ExchangeRateService
         return $toToEur / $fromToEur;
     }
 
-    public function getSupportedCurrencies(): array
+    public function getSupportedCurrencies()
     {
         return $this->repository->getSupportedCurrencies();
     }
 
     public function getTimeSeries(
-        string $startDate,
-        string $endDate,
-        array $currencies = []
-    ): array {
+        $startDate,
+        $endDate,
+        $currencies = []
+    ) {
         return $this->repository->getTimeSeries($startDate, $endDate, $currencies);
     }
 }
