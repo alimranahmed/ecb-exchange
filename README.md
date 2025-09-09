@@ -1,16 +1,12 @@
 # ECB Exchange Rate PHP Package
 
-A modern, fluent PHP package for accessing European Central Bank (ECB) exchange rate data with SOLID architecture principles.
+A modern, fluent PHP package for accessing European Central Bank (ECB) exchange rate data [API](https://data.ecb.europa.eu/help/api/data)
 
 ## Features
 
-- 🚀 **Fluent API** - Clean, chainable interface
-- 🏗️ **SOLID Architecture** - Well-structured, maintainable code
-- ⏰ **ECB Schedule Aware** - Handles ECB's 16:00 CET update schedule
-- 📊 **Multiple Data Formats** - Single rates, collections, and time series
-- 🔄 **Automatic Fallbacks** - Smart date handling for weekends and holidays
-- 🎯 **Type Safety** - Strong typing throughout
-- 📦 **Composer Ready** - Easy installation and autoloading
+- **ECB Schedule Aware** - Handles ECB's 16:00 CET update schedule
+- **Multiple Data Formats** - Single rates, collections, and time series
+- **Automatic Fallbacks** - Smart date handling for weekends and holidays
 
 ## Installation
 
