@@ -6,28 +6,7 @@ use EcbExchange\EcbExchangeBuilder;
 use EcbExchange\ExchangeRateService;
 use EcbExchange\EcbApiRepository;
 
-/**
- * Main ECB Exchange Rate API class
- * 
- * Provides a fluent interface for accessing ECB exchange rate data.
- * 
- * @example
- * // Get single exchange rate
- * $rate = Ecb::exchange()
- *     ->fromCurrency('USD')
- *     ->toCurrency('EUR')
- *     ->fromDate('2025-09-01')
- *     ->updatedAfter('2009-05-15T14:15:00+01:00')
- *     ->get();
- * 
- * @example
- * // Get multiple exchange rates
- * $rates = Ecb::exchange()
- *     ->fromCurrency('EUR')
- *     ->toCurrencies(['USD', 'GBP', 'JPY'])
- *     ->fromDate('2025-09-01')
- *     ->get();
- */
+
 class Ecb
 {
     private static ?ExchangeRateService $service = null;

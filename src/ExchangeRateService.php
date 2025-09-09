@@ -19,22 +19,20 @@ class ExchangeRateService
         string $date,
         ?string $updatedAfter = null
     ): float {
-        // If same currency, return 1.0
+
         if ($fromCurrency === $toCurrency) {
             return 1.0;
         }
 
-        // If converting from EUR to another currency
         if ($fromCurrency === 'EUR') {
             return $this->repository->getRateToEur($toCurrency, $date, $updatedAfter);
         }
 
-        // If converting to EUR from another currency
+
         if ($toCurrency === 'EUR') {
             return 1.0 / $this->repository->getRateToEur($fromCurrency, $date, $updatedAfter);
         }
 
-        // Convert between two non-EUR currencies via EUR
         $fromToEur = $this->repository->getRateToEur($fromCurrency, $date, $updatedAfter);
         $toToEur = $this->repository->getRateToEur($toCurrency, $date, $updatedAfter);
 
