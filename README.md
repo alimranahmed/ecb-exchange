@@ -88,89 +88,6 @@ $currencies = Ecb::getSupportedCurrencies();
 // Returns: ['AUD', 'CAD', 'CHF', 'DKK', 'EUR', 'GBP', 'JPY', 'NOK', 'NZD', 'SEK', 'USD']
 ```
 
-## API Reference
-
-### Ecb::exchange()
-
-Returns a new `EcbExchangeBuilder` instance for fluent API usage.
-
-### EcbExchangeBuilder Methods
-
-#### fromCurrency(string $currency)
-Set the source currency. If not specified, EUR is used as default.
-
-#### toCurrency(string $currency)
-Set the target currency for single rate queries.
-
-#### toCurrencies(array $currencies)
-Set multiple target currencies for batch queries.
-
-#### date(string $date)
-Set the date for exchange rates in YYYY-MM-DD format.
-
-#### updatedAfter(string $timestamp)
-Set a filter for data updated after the specified ISO 8601 timestamp.
-
-#### get()
-Execute the query and return:
-- `EcbExchangeRate` for single currency queries
-- `EcbExchangeRateCollection` for multiple currency queries
-
-### EcbExchangeRate Methods
-
-#### getFromCurrency(): string
-Get the source currency code.
-
-#### getToCurrency(): string
-Get the target currency code.
-
-#### getRate(): float
-Get the exchange rate.
-
-#### getDate(): string
-Get the date of the exchange rate.
-
-#### getUpdatedAfter(): ?string
-Get the updated after timestamp.
-
-#### convert(float $amount): float
-Convert an amount using this exchange rate.
-
-#### toArray(): array
-Convert to array representation.
-
-#### __toString(): string
-String representation of the exchange rate.
-
-### EcbExchangeRateCollection Methods
-
-#### add(EcbExchangeRate $rate): void
-Add an exchange rate to the collection.
-
-#### getRates(): array
-Get all exchange rates in the collection.
-
-#### count(): int
-Get the number of rates in the collection.
-
-#### isEmpty(): bool
-Check if the collection is empty.
-
-#### filterByCurrency(string $currency): EcbExchangeRateCollection
-Filter rates by currency code.
-
-#### filterByDate(string $date): EcbExchangeRateCollection
-Filter rates by date.
-
-#### toArray(): array
-Convert to array representation.
-
-#### getFirst(): ?EcbExchangeRate
-Get the first rate in the collection.
-
-#### getLast(): ?EcbExchangeRate
-Get the last rate in the collection.
-
 ## ECB Schedule Awareness
 
 This package is aware of the ECB's update schedule:
@@ -184,25 +101,6 @@ The package automatically handles:
 - Weekend and holiday fallbacks
 - Time zone considerations
 - Effective date calculations based on update times
-
-## Architecture
-
-The package follows SOLID principles:
-
-- **Single Responsibility**: Each class has one clear purpose
-- **Open/Closed**: Easy to extend without modifying existing code
-- **Liskov Substitution**: Interfaces can be substituted with implementations
-- **Interface Segregation**: Small, focused interfaces
-- **Dependency Inversion**: Depends on abstractions, not concretions
-
-### Key Components
-
-- `Ecb` - Main entry point
-- `EcbExchangeBuilder` - Fluent API builder
-- `ExchangeRateService` - Business logic service
-- `EcbApiRepository` - Data access layer with integrated HTTP client and data parsing
-- `EcbExchangeRate` - Single exchange rate data object
-- `EcbExchangeRateCollection` - Collection of exchange rates
 
 ## Error Handling
 
@@ -234,7 +132,7 @@ composer test
 
 ## Requirements
 
-- PHP 7.4 or higher
+- PHP 7.3 or higher
 - Internet connection for API access
 
 ## License
