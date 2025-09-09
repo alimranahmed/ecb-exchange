@@ -42,7 +42,7 @@ jobs:
       run: composer test
     
     - name: Generate coverage report
-      run: vendor/bin/phpunit --coverage --coverage-clover clover.xml
+      run: vendor/bin/phpunit --coverage-text --coverage-clover=clover.xml
     
     - name: Generate test coverage badge
       uses: timkrase/phpunit-coverage-badge@v1.2.0
